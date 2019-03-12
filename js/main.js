@@ -11,26 +11,46 @@
 //import ex from './slide.vue'
 
 window.onload = function () {
-  // register modal component
-  Vue.component('modal', {
-    template: '#modal-template'
-  })
-
-  // start app
+  Vue.use(VueAwesomeSwiper)
   new Vue({
     el: '#app',
+    components: {
+      LocalSwiper: VueAwesomeSwiper.swiper,
+      LocalSlide: VueAwesomeSwiper.swiperSlide,
+    },
     data: {
-      showModal: false,
-      slide: 0,
-      sliding: null,
+      showLoginModal: false,
+      moviesSwiperOptions: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+
+      }
+    },
+    computed: {
+      swiper() {
+        return this.$refs.moviesSwiper.swiper
+      }
     },
     methods: {
-      onSlideStart(slide) {
-          this.sliding = true
-      },
-      onSlideEnd(slide) {
-          this.sliding = false
+      onSetTranslate() {
+        console.log('onSetTranslate')
       }
     }
+  })
+
+  // register modal component
+  Vue.component('modal', {
+    template: '#login-modal'
   })
 }
